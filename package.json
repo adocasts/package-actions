@@ -1,7 +1,7 @@
 {
   "name": "@adocasts.com/actions",
   "description": "Adds a make:action Ace CLI command to easily create new action handler classes in your AdonisJS 6 application",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "engines": {
     "node": ">=20.6.0"
   },
@@ -9,6 +9,8 @@
   "files": [
     "build/commands",
     "build/stubs",
+    "build/configure.d.ts",
+    "build/configure.js",
     "build/index.d.ts",
     "build/index.js"
   ],
