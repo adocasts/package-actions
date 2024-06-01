@@ -1,0 +1,13 @@
+{{#var className = string.pascalCase(entity.name)}}
+{{#var resourceFileName = string(className).snakeCase().ext('.ts').toString()}}
+{{{
+  exports({
+    to: app.makePath('app/actions', feature.path, feature.name, entity.path, resourceFileName)
+  })
+}}}
+
+export default class {{ className }} {
+  async handle() {
+    // do stuff
+  }
+}
