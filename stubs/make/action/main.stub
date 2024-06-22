@@ -9,7 +9,7 @@
 type Params = {}
 
 export default class {{ className }} {
-  static async handle(_: Params) {
+  static async handle({}: Params) {
     // do stuff
   }
 }

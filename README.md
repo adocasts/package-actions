@@ -32,7 +32,7 @@ Which creates an action class at: `app/actions/register_user.ts`
 type Params = {}
 
 export default class RegisterUser {
-  static async handle(_: Params) {
+  static async handle({}: Params) {
     // do stuff
   }
 }
@@ -67,7 +67,7 @@ type Params = {}
 export default class RegisterUser {
   constructor(protected ctx: HttpContext) {}
 
-  async handle(_: Params) {
+  async handle({}: Params) {
     // do stuff
   }
 }
@@ -78,6 +78,8 @@ Unfamiliar with this approach? You can learn more via the [AdonisJS HTTP Context
 What does this look like in practice? Let's take a look! Lets say we have a simple `Difficulty` model
 
 ```ts
+// app/models/difficulty.ts
+
 export default class Difficulty extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
@@ -114,6 +116,8 @@ node ace make:controller difficulty store update
 For our example, we'll stub it with a `store` and `update` method, and the generated file will look like this:
 
 ```ts
+// app/controllers/difficulties_controller.ts
+
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class DifficultiesController {
@@ -126,6 +130,8 @@ export default class DifficultiesController {
 Cool, now let's get it taking in the request and returning a response for both handlers.
 
 ```ts
+// app/controllers/difficulties_controller.ts
+
 import { difficultyValidator } from '#validators/difficulty'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -176,6 +182,8 @@ Then, handle the needed operations to complete an action
 
 Here's our CreateDifficulty action:
 ```ts
+// app/actions/difficulties/create_difficulty.ts
+
 import Organization from '#models/organization'
 import { difficultyValidator } from '#validators/difficulty'
 import { Infer } from '@vinejs/vine/types'
@@ -202,6 +210,8 @@ Assupmtion: the organization has a method on it called `findNextSort`
 
 And, our UpdateDifficulty action:
 ```ts
+// app/actions/difficulties/update_difficulty.ts
+
 import Organization from '#models/organization'
 import { difficultyValidator } from '#validators/difficulty'
 import { Infer } from '@vinejs/vine/types'
@@ -234,6 +244,8 @@ export default class UpdateDifficulty {
 Lastly, we just need to use our actions inside our controller.
 
 ```ts
+// app/controllers/difficulties_controller.ts
+
 import CreateDifficulty from '#actions/difficulties/create_difficulty'
 import UpdateDifficulty from '#actions/difficulties/update_difficulty'
 import { difficultyValidator } from '#validators/difficulty'
