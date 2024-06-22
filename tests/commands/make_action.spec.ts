@@ -20,7 +20,10 @@ test.group('MakeAction', (group) => {
       'app/actions/store_user_from_form.ts',
       'export default class StoreUserFromForm {'
     )
-    await assert.fileContains('app/actions/store_user_from_form.ts', `async handle() {`)
+    await assert.fileContains(
+      'app/actions/store_user_from_form.ts',
+      `static async handle(_: Params) {`
+    )
   })
 
   test('make a feature action', async ({ fs, assert }) => {
@@ -36,7 +39,10 @@ test.group('MakeAction', (group) => {
       'app/actions/users/update_user_from_form.ts',
       'export default class UpdateUserFromForm {'
     )
-    await assert.fileContains('app/actions/users/update_user_from_form.ts', `async handle() {`)
+    await assert.fileContains(
+      'app/actions/users/update_user_from_form.ts',
+      `static async handle(_: Params) {`
+    )
   })
 
   test('make an http action', async ({ fs, assert }) => {

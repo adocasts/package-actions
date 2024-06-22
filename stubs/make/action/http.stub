@@ -8,11 +8,13 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
+type Params = {}
+
 @inject()
 export default class {{ className }} {
   constructor(protected ctx: HttpContext) {}
 
-  async handle() {
+  async handle(_: Params) {
     // do stuff
   }
 }

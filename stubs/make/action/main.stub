@@ -6,8 +6,10 @@
   })
 }}}
 
+type Params = {}
+
 export default class {{ className }} {
-  async handle() {
+  static async handle(_: Params) {
     // do stuff
   }
 }
