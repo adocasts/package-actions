@@ -22,7 +22,7 @@ test.group('MakeAction', (group) => {
     )
     await assert.fileContains(
       'app/actions/store_user_from_form.ts',
-      `static async handle(_: Params) {`
+      `static async handle({}: Params) {`
     )
   })
 
@@ -41,7 +41,7 @@ test.group('MakeAction', (group) => {
     )
     await assert.fileContains(
       'app/actions/users/update_user_from_form.ts',
-      `static async handle(_: Params) {`
+      `static async handle({}: Params) {`
     )
   })
 
