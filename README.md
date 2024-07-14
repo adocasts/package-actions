@@ -3,31 +3,41 @@
 Easily strub new action classes inside your AdonisJS 6 project
 
 ## Install with the Ace CLI
-  ```shell
-  node ace add @adocasts.com/actions
-  ```
+
+```shell
+node ace add @adocasts.com/actions
+```
+
 - Installs `@adocasts.com/actions`.
 - Automatically configures the `make:action` command via your `adonisrc.ts` file.
 
 ## Manual Install & Configure
+
 First, install
+
 ```shell
 npm i @adocasts.com/actions@latest
 ```
+
 Then, configure
+
 ```shell
 node ace configure @adocasts.com/actions
 ```
 
 ## The Make Action Command
-Once `@adocasts.com/actions` is installed & configured in your application, 
+
+Once `@adocasts.com/actions` is installed & configured in your application,
 you'll have access to the `node ace make:action [name]` command.
 
 For example, to create a `RegisterFromForm` action, you can do:
+
 ```shell
 node ace make:action RegisterUser
 ```
+
 Which creates an action class at: `app/actions/register_user.ts`
+
 ```ts
 type Params = {}
 
@@ -39,27 +49,36 @@ export default class RegisterUser {
 ```
 
 ### Features
-Apps have lots of actions they perform, so it's a great idea to group them into feature/resource folders. 
+
+Apps have lots of actions they perform, so it's a great idea to group them into feature/resource folders.
 This can be easily done via the `--feature` flag.
+
 ```shell
 node ace make:action register_user --feature=auth
 ```
+
 This will then create our action class at:
+
 ```shell
 app/actions/auth/register_from_form.ts
 ```
+
 Also, note in both the above examples, the file name was normalized.
 
 ### HTTP Actions
+
 Though actions are typically meant to be self contained, if your action is only going to handle an HTTP Request, you can optionally include an injection of the `HttpContext` directly within your action class via the `--http` flag.
 This, obviously, is up to you/your team with whether you'd like to use it.
+
 ```shell
 node ace make:action register_user --http --feature=auth
 ```
+
 Which then creates: `app/actions/auth/register_from_form.ts`
+
 ```ts
 import { inject } from '@adonisjs/core'
-import type { HttpContext } from '@adonisjs/core/http'
+import { HttpContext } from '@adonisjs/core/http'
 
 type Params = {}
 
@@ -72,9 +91,11 @@ export default class RegisterUser {
   }
 }
 ```
+
 Unfamiliar with this approach? You can learn more via the [AdonisJS HTTP Context documentation](https://docs.adonisjs.com/guides/concepts/http-context#injecting-http-context-using-dependency-injection).
 
 ## Full Example
+
 What does this look like in practice? Let's take a look! Lets say we have a simple `Difficulty` model
 
 ```ts
@@ -108,11 +129,13 @@ export default class Difficulty extends BaseModel {
 ```
 
 #### Step 1: Creating Our Controller
+
 First, we'll want to create a controller, this will be in charge of taking in the request and returning a response.
 
 ```shell
 node ace make:controller difficulty store update
 ```
+
 For our example, we'll stub it with a `store` and `update` method, and the generated file will look like this:
 
 ```ts
@@ -138,9 +161,9 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class DifficultiesController {
   async store({ request, response }: HttpContext) {
     const data = await request.validateUsing(difficultyValidator)
-    
+
     // TODO: create the difficulty
-    
+
     return response.redirect().back()
   }
 
@@ -155,20 +178,23 @@ export default class DifficultiesController {
 ```
 
 #### Step 2: Creating Our Actions
-Think of actions like single-purpose service classes. 
+
+Think of actions like single-purpose service classes.
 We'll have a single file meant to perform one action.
 As you may have guessed, this means we'll have a good number of actions within our application,
-so we'll also want to nest them within folders to help scope them. 
+so we'll also want to nest them within folders to help scope them.
 The depth of this will be determined by the complexity of your application.
 
 Our application is simple, so let's nest ours within a single "resource" feature folder called `difficulties`.
 
 So, we'll have one action to create a difficulty:
+
 ```shell
 node ace make:action create_difficulty --feature=difficulties
 ```
 
 And, another to update a difficulty:
+
 ```shell
 node ace make:action difficulties/create_difficulty
 ```
@@ -176,11 +202,13 @@ node ace make:action difficulties/create_difficulty
 Note, you can easily nest within folders by either using the `--feature` flag or including the folder path in the name parameter.
 
 #### Step 3: Defining Our Actions
+
 When we create an action, we're provided an empty `Params` type.
 We'll want to fill that in with our handler's expected parameters.
 Then, handle the needed operations to complete an action
 
 Here's our CreateDifficulty action:
+
 ```ts
 // app/actions/difficulties/create_difficulty.ts
 
@@ -206,9 +234,11 @@ export default class CreateDifficulty {
   }
 }
 ```
+
 Assupmtion: the organization has a method on it called `findNextSort`
 
 And, our UpdateDifficulty action:
+
 ```ts
 // app/actions/difficulties/update_difficulty.ts
 
@@ -233,7 +263,7 @@ export default class UpdateDifficulty {
 
     // merge in new data and update
     await difficulty.merge(data).save()
-    
+
     // return the updated difficulty
     return difficulty
   }
@@ -241,6 +271,7 @@ export default class UpdateDifficulty {
 ```
 
 #### Step 4: Using Our Actions
+
 Lastly, we just need to use our actions inside our controller.
 
 ```ts
@@ -275,4 +306,3 @@ export default class DifficultiesController {
 ```
 
 Assumption: the organization is being added onto the HttpContext within a middleware prior to our controller being called.
-
