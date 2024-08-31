@@ -96,7 +96,7 @@ Unfamiliar with this approach? You can learn more via the [AdonisJS HTTP Context
 
 ## Full Example
 
-What does this look like in practice? Let's take a look! Lets say we have a simple `Difficulty` model
+What does this look like in practice? Let's take a look! Let's say we have a simple `Difficulty` model
 
 ```ts
 // app/models/difficulty.ts
@@ -196,7 +196,7 @@ node ace make:action create_difficulty --feature=difficulties
 And, another to update a difficulty:
 
 ```shell
-node ace make:action difficulties/create_difficulty
+node ace make:action difficulties/update_difficulty
 ```
 
 Note, you can easily nest within folders by either using the `--feature` flag or including the folder path in the name parameter.
