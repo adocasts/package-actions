@@ -94,6 +94,22 @@ export default class RegisterUser {
 
 Unfamiliar with this approach? You can learn more via the [AdonisJS HTTP Context documentation](https://docs.adonisjs.com/guides/concepts/http-context#injecting-http-context-using-dependency-injection).
 
+### Resourceful Actions
+
+As of v1.0.5 you can now also create CRUD actions for a resource all in one go using the `--resource` flag!
+
+```bash
+node ace make:action user --resource
+```
+
+This one command will then generate the following actions
+
+- GetUser (`app/actions/users/get_user.ts`)
+- GetUsers (`app/actions/users/get_users.ts`)
+- StoreUser (`app/actions/users/store_user.ts`)
+- UpdateUser (`app/actions/users/update_user.ts`)
+- DestroyUser (`app/actions/users/destroy_user.ts`)
+
 ## Full Example
 
 What does this look like in practice? Let's take a look! Let's say we have a simple `Difficulty` model

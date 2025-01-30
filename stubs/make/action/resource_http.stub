@@ -1,0 +1,22 @@
+{{#var className = string.pascalCase(entity.name)}}
+{{#var resourceFileName = string(className).snakeCase().ext('.ts').toString()}}
+{{{
+  exports({
+    to: app.makePath('app/actions', feature.path, feature.name, entity.path, resourceFileName)
+  })
+}}}
+import { inject } from '@adonisjs/core'
+import { HttpContext } from '@adonisjs/core/http'
+
+type Params = {
+  id: number
+}
+
+@inject()
+export default class {{ className }} {
+  constructor(protected ctx: HttpContext) {}
+
+  async handle({ id }: Params) {
+    // do stuff
+  }
+}

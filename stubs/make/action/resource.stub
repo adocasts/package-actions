@@ -1,0 +1,17 @@
+{{#var className = string.pascalCase(entity.name)}}
+{{#var resourceFileName = string(className).snakeCase().ext('.ts').toString()}}
+{{{
+  exports({
+    to: app.makePath('app/actions', feature.path, feature.name, entity.path, resourceFileName)
+  })
+}}}
+
+type Params = {
+  id: number
+}
+
+export default class {{ className }} {
+  static async handle({ id }: Params) {
+    // do stuff
+  }
+}
